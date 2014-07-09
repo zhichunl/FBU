@@ -42,8 +42,8 @@
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:YES];
-    NSMutableDictionary *message = _user[@"messagesSent"];
-    NSString *mess = message[_chatPartner[@"username"]];
+//    NSMutableDictionary *message = _user[@"messagesSent"];
+//    NSString *mess = message[_chatPartner[@"username"]];
     //animations for when a message disappears
     self.message = [[UITextView alloc] initWithFrame:CGRectMake(self.view.center.x - self.view.bounds.size.width/4, -100, self.view.bounds.size.width, 50)];
     [self.view addSubview:self.message];
@@ -66,9 +66,9 @@
                              self.message.center = CGPointMake(self.view.center.x - 25, -100);
                          });
                     }];
-    [message removeObjectForKey:mess];
-    _user[@"messagesSent"] = message;
-    [_user saveInBackground];
+//    [message removeObjectForKey:mess];
+//    _user[@"messagesSent"] = message;
+//    [_user saveInBackground];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -148,14 +148,14 @@
     
     //TODO: send self.textField.text to the chat
     NSLog(@"Sending %@ to the server",self.textField.text);
-    NSString *message = self.textField.text;
-    NSMutableDictionary* messages = _user[@"messagesSent"];
-    messages[self.chatPartner[@"username"]] = message;
-    _user[@"messageSent"] = messages;
-    [_user saveInBackground];
-    NSMutableDictionary *mes = self.chatPartner[@"messagesRec"];
-    mes[_user[@"username"]] = message;
-    [self.chatPartner saveInBackground];
+//    NSString *message = self.textField.text;
+//    NSMutableDictionary* messages = _user[@"messagesSent"];
+//    messages[self.chatPartner[@"name"]] = message;
+//    _user[@"messageSent"] = messages;
+//    [_user saveInBackground];
+//    NSMutableDictionary *mes = self.chatPartner[@"messagesRec"];
+//    mes[_user[@"username"]] = message;
+//    [self.chatPartner saveInBackground];
     self.textField.text = @"";
 }
 

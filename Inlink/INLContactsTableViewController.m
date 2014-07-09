@@ -198,7 +198,7 @@
     
     //TODO: change title to name of friend clicked on
     cvc.title = ((INLContactsTableViewCell *)[tableView cellForRowAtIndexPath:indexPath]).nameLabel.text;
-    //cvc.chatPartner = self.friends[indexPath.row];
+    cvc.chatPartner = self.friends[indexPath.row];
     [self.navigationController pushViewController:cvc animated:YES];
 }
 /*

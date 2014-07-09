@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>C3DD4A0C-B886-4297-92F9-1F8692D62197</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Inlink</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>40471565-ACC0-4C1E-BA53-655CD41A6B12</key>
+		<string>https://github.com/shangtee/FBU.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Inlink/Inlink.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>40471565-ACC0-4C1E-BA53-655CD41A6B12</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/shangtee/FBU.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>40471565-ACC0-4C1E-BA53-655CD41A6B12</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>40471565-ACC0-4C1E-BA53-655CD41A6B12</string>
+			<key>IDESourceControlWCCName</key>
+			<string>FBUMiniProject</string>
+		</dict>
+	</array>
+</dict>
+</plist>

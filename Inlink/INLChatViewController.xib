@@ -25,7 +25,7 @@
                         <constraint firstAttribute="width" constant="225" id="HSA-jZ-MOu"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="done"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="URL" returnKeyType="done"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="pFb-PC-3Ct"/>
                     </connections>

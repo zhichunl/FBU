@@ -34,6 +34,7 @@
 		8A57A80E196C72FA0049FB01 /* INLsignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A57A80D196C72FA0049FB01 /* INLsignUpViewController.xib */; };
 		8A57A813196C8A6B0049FB01 /* InLink.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A57A812196C8A6B0049FB01 /* InLink.png */; };
 		8A57A815196C90F70049FB01 /* INLloginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A57A814196C90F70049FB01 /* INLloginViewController.xib */; };
+		8A7BD531196DED19001CC731 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A7BD530196DED19001CC731 /* Icon.png */; };
 		C365F298196C4BD2002EBC4C /* INLloginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C365F296196C4BD2002EBC4C /* INLloginViewController.m */; };
 		C365F29D196C4C6A002EBC4C /* INLsignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C365F29B196C4C6A002EBC4C /* INLsignUpViewController.m */; };
 		C365F2A1196C4C94002EBC4C /* INLContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C365F2A0196C4C94002EBC4C /* INLContactsTableViewController.m */; };
@@ -90,6 +91,7 @@
 		8A57A80D196C72FA0049FB01 /* INLsignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = INLsignUpViewController.xib; sourceTree = "<group>"; };
 		8A57A812196C8A6B0049FB01 /* InLink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = InLink.png; sourceTree = "<group>"; };
 		8A57A814196C90F70049FB01 /* INLloginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = INLloginViewController.xib; sourceTree = "<group>"; };
+		8A7BD530196DED19001CC731 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
 		C365F295196C4BD2002EBC4C /* INLloginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INLloginViewController.h; sourceTree = "<group>"; };
 		C365F296196C4BD2002EBC4C /* INLloginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INLloginViewController.m; sourceTree = "<group>"; };
 		C365F29A196C4C6A002EBC4C /* INLsignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INLsignUpViewController.h; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				130CA28A196B885700ECD902 /* Inlink-Info.plist */,
+				8A7BD530196DED19001CC731 /* Icon.png */,
 				130CA28B196B885700ECD902 /* InfoPlist.strings */,
 				130CA28E196B885700ECD902 /* main.m */,
 				130CA290196B885700ECD902 /* Inlink-Prefix.pch */,
@@ -308,7 +311,7 @@
 				ORGANIZATIONNAME = Inlink;
 				TargetAttributes = {
 					130CA27E196B885700ECD902 = {
-						DevelopmentTeam = S979T5734D;
+						DevelopmentTeam = 28GU5W3B7V;
 					};
 					130CA299196B885700ECD902 = {
 						TestTargetID = 130CA27E196B885700ECD902;
@@ -338,6 +341,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A7BD531196DED19001CC731 /* Icon.png in Resources */,
 				C365F2AB196C4CD0002EBC4C /* INLChatViewController.xib in Resources */,
 				130CA28D196B885700ECD902 /* InfoPlist.strings in Resources */,
 				8A0DC093196CBA1300023605 /* inLinkLogoGrey.png in Resources */,
@@ -507,7 +511,7 @@
 				GCC_PREFIX_HEADER = "Inlink/Inlink-Prefix.pch";
 				INFOPLIST_FILE = "Inlink/Inlink-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "90EDDEC2-29FD-47F0-8071-DC217B6539F3";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -528,7 +532,7 @@
 				GCC_PREFIX_HEADER = "Inlink/Inlink-Prefix.pch";
 				INFOPLIST_FILE = "Inlink/Inlink-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "90EDDEC2-29FD-47F0-8071-DC217B6539F3";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

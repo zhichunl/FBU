@@ -17,7 +17,6 @@
 @interface INLContactsTableViewController ()
 
 @property (nonatomic) NSMutableArray *friends;
-@property (nonatomic) BOOL gotNew;
 
 @end
 
@@ -59,10 +58,37 @@
         self.tableView.backgroundView = tempImageView;
         
 
+        UIRefreshControl *refreshControl = [[UIRefreshControl alloc]init];
+        
+        refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+        
+        [refreshControl addTarget:self action:@selector(updateTable) forControlEvents:UIControlEventValueChanged];
+        self.refreshControl = refreshControl;
+
+
+        // Keep a listener for NEW
+        //[self addObserver: self forKeyPath:@"gotNew" options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+                  //context:nil];
+        
+
 
     }
     return self;
 }
+
+
+-(void)updateTable
+{
+    [self.tableView reloadData];
+    [self.refreshControl endRefreshing];
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath
+ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    [self.view setNeedsDisplay];
+}
+
 
 - (void)viewDidLoad
 {
@@ -136,8 +162,9 @@
 //        INLloginViewController *login = [[INLloginViewController alloc] init];
 //        [self.navigationController presentViewController:login animated:YES completion:nil];
 //    }
-    /*
+    
     //Test push
+    /*
     NSLog(@"Testing pushing");
     PFQuery *pushQuery = [PFInstallation query];
     [pushQuery whereKey:@"user" equalTo:[PFUser currentUser]];
@@ -222,6 +249,8 @@
     if (count > 0){
         NSLog(@"There are messages!");
         cell.LinkLabel.text = @"NEW";
+    } else {
+        cell.LinkLabel.text = @"";
     }
     
     return cell;

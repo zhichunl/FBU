@@ -10,4 +10,6 @@
 
 @interface INLContactsTableViewController : UITableViewController
 
+@property (nonatomic) BOOL gotNew;
+
 @end

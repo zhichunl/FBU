@@ -31,7 +31,7 @@
                         </connections>
                     </button>
                 </subviews>
-                <color key="backgroundColor" red="0.45635747959697581" green="1" blue="0.76097000672301607" alpha="1" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" red="0.7912009580291971" green="0.92695027372262717" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             </tableViewCellContentView>
             <connections>
                 <outlet property="DisplayedName" destination="j3h-IW-FHX" id="B1h-bB-aS9"/>

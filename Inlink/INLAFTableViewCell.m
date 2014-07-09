@@ -11,7 +11,6 @@
 
 @interface INLAFTableViewCell()
 
-@property (weak, nonatomic) IBOutlet UIButton *friends;
 
 @end
 
@@ -20,35 +19,34 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (IBAction)addedFriend:(id)sender {
-    PFQuery *query = [PFUser query];
+    PFObject *friend = [PFObject objectWithClassName:@"Friends"];
     PFUser *currentUser = [PFUser currentUser];
     NSString *userRe = self.DisplayedName.text;
-    if (userRe){
-        [query whereKey:@"name" equalTo:userRe];
-        NSArray* currentStrings = [query findObjects];
-        PFUser* addUser = currentStrings[0];
-        NSMutableArray *friendsRequested = currentUser[@"friendRequests"];
-        [friendsRequested removeObject:addUser];
-        currentUser[@"friendRequests"] = friendsRequested;
-        [currentUser saveInBackground];
-        NSMutableArray *friendsReceived = addUser[@"friendsRequestsR"];
-        addUser[@"friendsRequestsR"] = friendsReceived;
-        [friendsReceived removeObject:currentUser];
-        [addUser saveInBackground];
-        NSMutableArray *friends = currentUser[@"friends"];
-        [friendsRequested addObject:addUser];
-        currentUser[@"friends"] = friends;
-        [currentUser saveInBackground];
-        NSMutableArray *friends1 = addUser[@"friends"];
-        addUser[@"friends"] = friends1;
-        [friendsReceived addObject:currentUser];
-        [addUser saveInBackground];
-        
+    if (userRe && self.fri){
+        [friend setObject:currentUser forKey:@"to"];
+        [friend setObject:self.fri forKey:@"from"];
+        [friend setObject:[NSDate date] forKey:@"date"];
+        [friend saveInBackground];
     }
-    [self.delegate reload];
+    PFQuery *query = [PFQuery queryWithClassName:@"Follow"];
+    [query whereKey:@"to" equalTo:[PFUser currentUser]];
+    NSMutableArray* people = [[query findObjects] mutableCopy];
+    NSMutableArray* cool = [NSMutableArray array];
+    for (PFObject *o in people){
+        PFUser*j = [o objectForKey:@"from"];
+        PFUser *q = [j fetchIfNeeded];
+        NSString *i1 = q[@"username"];
+        NSString *i2 = self.fri[@"username"];
+        if (![i1 isEqualToString:i2]){
+            [cool addObject:o];
+        }
+    }
+    
+    [self.delegate reload:cool];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

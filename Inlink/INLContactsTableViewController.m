@@ -17,6 +17,7 @@
 @interface INLContactsTableViewController ()
 
 @property (nonatomic) NSMutableArray *friends;
+@property (nonatomic) BOOL gotNew;
 
 @end
 
@@ -28,8 +29,6 @@
     if (self) {
         // Custom initialization
         UINavigationItem *navItem = self.navigationItem;
-
-        //UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewFriend:)];
         
         UIBarButtonItem *bbi = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add70_small"] style: UIBarButtonItemStylePlain target:self action:@selector(addNewFriend:)];
         
@@ -58,6 +57,8 @@
         [tempImageView setFrame:self.tableView.frame];
         
         self.tableView.backgroundView = tempImageView;
+        
+
 
     }
     return self;
@@ -80,7 +81,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     // set up the query on the Follow table
-    PFQuery *query = [PFQuery queryWithClassName:@"Follow"];
+    PFQuery *query = [PFQuery queryWithClassName:@"Friends"];
     [query whereKey:@"from" equalTo:[PFUser currentUser]];
     __block NSMutableArray* friends;
     // execute the query
@@ -112,8 +113,18 @@
     
 
             NSLog(@"%d", [self.friends count]);
-
-            [self.tableView reloadData];
+    
+    
+    
+    PFQuery *query1 = [PFQuery queryWithClassName:@"Friends"];
+    [query1 whereKey:@"to" equalTo:[PFUser currentUser]];
+    NSMutableArray *friends2 = [[query1 findObjects]mutableCopy];
+    for(PFObject *o in friends2) {
+        PFUser *otherUser = [o objectForKey:@"from"];
+        PFUser *localOtherUser = [otherUser fetchIfNeeded];
+        [self.friends addObject:localOtherUser];
+    }
+    [self.tableView reloadData];
 
 }
 -(void)viewDidAppear:(BOOL)animated
@@ -125,8 +136,18 @@
 //        INLloginViewController *login = [[INLloginViewController alloc] init];
 //        [self.navigationController presentViewController:login animated:YES completion:nil];
 //    }
+    /*
+    //Test push
+    NSLog(@"Testing pushing");
+    PFQuery *pushQuery = [PFInstallation query];
+    [pushQuery whereKey:@"user" equalTo:[PFUser currentUser]];
     
-
+    // Send push notification to query
+    PFPush *push = [[PFPush alloc] init];
+    [push setQuery:pushQuery]; // Set our Installation query
+    [push setMessage:@"Yo"];
+    [push sendPushInBackground];
+    NSLog(@"End testing"); */
 
 }
 
@@ -189,6 +210,20 @@
 //    }
     PFUser *friend = (PFUser *)self.friends[indexPath.row];
     cell.nameLabel.text = friend[@"username"];
+    
+    //Toggle NEW
+    PFQuery *query = [PFQuery queryWithClassName:@"Messages"];
+    [query whereKey:@"to" equalTo:[PFUser currentUser]];
+    [query whereKey:@"from" equalTo:friend];
+    NSMutableArray *people = [[query findObjects] mutableCopy];
+    NSUInteger count = [people count];
+    NSLog(@"The count is:%lu", count);
+    
+    if (count > 0){
+        NSLog(@"There are messages!");
+        cell.LinkLabel.text = @"NEW";
+    }
+    
     return cell;
 }
 

@@ -35,8 +35,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="DisplayedName" destination="j3h-IW-FHX" id="B1h-bB-aS9"/>
-                <outlet property="addFriends" destination="MpU-xJ-i56" id="k88-lc-119"/>
-                <outlet property="friends" destination="MpU-xJ-i56" id="aKX-5O-oYD"/>
+                <outlet property="button" destination="MpU-xJ-i56" id="CBS-Q5-o2P"/>
             </connections>
         </tableViewCell>
     </objects>

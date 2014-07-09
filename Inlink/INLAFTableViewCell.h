@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Parse/Parse.h"
 
 
 @protocol INLAFProtocol;
@@ -14,12 +15,14 @@
 @interface INLAFTableViewCell : UITableViewCell
 @property id <INLAFProtocol> delegate;
 @property (weak, nonatomic) IBOutlet UILabel *DisplayedName;
+@property (nonatomic) PFUser *fri;
+@property (weak, nonatomic) IBOutlet UIButton *button;
 
 @end
 
 
 @protocol INLAFProtocol <NSObject>
 
--(void)reload;
+-(void)reload: (NSMutableArray *)people;
 
 @end

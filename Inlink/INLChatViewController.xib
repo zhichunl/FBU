@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="INLChatViewController">
             <connections>
                 <outlet property="Mes" destination="3B6-R5-2x0" id="2dY-jd-yBu"/>
+                <outlet property="invalidUrlLabel" destination="yRB-B7-3T8" id="eBs-Or-UGg"/>
                 <outlet property="sendButton" destination="QNX-TH-fVY" id="Jf0-KD-OWM"/>
                 <outlet property="textField" destination="DWZ-Nu-4Tn" id="ta0-OH-RIU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -18,8 +19,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your URL" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DWZ-Nu-4Tn">
-                    <rect key="frame" x="20" y="532" width="213" height="30"/>
+                    <rect key="frame" x="20" y="532" width="217" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="225" id="HSA-jZ-MOu"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="done"/>
                     <connections>
@@ -27,7 +31,7 @@
                     </connections>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QNX-TH-fVY">
-                    <rect key="frame" x="253" y="532" width="53" height="30"/>
+                    <rect key="frame" x="245" y="532" width="67" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="53" id="09u-07-zRa"/>
@@ -41,21 +45,29 @@
                     </connections>
                 </button>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="label" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3B6-R5-2x0">
-                    <rect key="frame" x="40" y="132" width="240" height="77"/>
+                    <rect key="frame" x="40" y="135" width="240" height="77"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="1" green="0.82710504139600738" blue="0.23038879872525941" alpha="1" colorSpace="calibratedRGB"/>
-                    <color key="textColor" red="0.42284956193036871" green="0.56645333726481772" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.18140016270000001" green="0.65209417390000002" blue="0.86627072699999996" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
+                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yRB-B7-3T8">
+                    <rect key="frame" x="20" y="507" width="36" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="DWZ-Nu-4Tn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="6CS-sh-T0V"/>
-                <constraint firstItem="QNX-TH-fVY" firstAttribute="leading" secondItem="DWZ-Nu-4Tn" secondAttribute="trailing" constant="26" id="clG-8T-ona"/>
-                <constraint firstAttribute="bottom" secondItem="DWZ-Nu-4Tn" secondAttribute="bottom" constant="6" id="qUE-H3-TwO"/>
-                <constraint firstAttribute="bottom" secondItem="QNX-TH-fVY" secondAttribute="bottom" constant="6" id="xdk-s1-l0t"/>
-                <constraint firstAttribute="trailing" secondItem="QNX-TH-fVY" secondAttribute="trailing" constant="24" id="yw8-N0-jKB"/>
+                <constraint firstItem="DWZ-Nu-4Tn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="CZ9-Ez-n6a"/>
+                <constraint firstItem="QNX-TH-fVY" firstAttribute="top" secondItem="DWZ-Nu-4Tn" secondAttribute="top" id="GDr-i9-c8e"/>
+                <constraint firstAttribute="bottom" secondItem="DWZ-Nu-4Tn" secondAttribute="bottom" constant="6" id="GQM-RW-drR"/>
+                <constraint firstItem="DWZ-Nu-4Tn" firstAttribute="top" secondItem="yRB-B7-3T8" secondAttribute="bottom" constant="8" id="fL7-I5-2C5"/>
+                <constraint firstAttribute="trailing" secondItem="QNX-TH-fVY" secondAttribute="trailing" constant="8" id="glT-X2-2YI"/>
+                <constraint firstItem="yRB-B7-3T8" firstAttribute="leading" secondItem="DWZ-Nu-4Tn" secondAttribute="leading" id="y7r-Uw-ejz"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>

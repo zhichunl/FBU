@@ -16,6 +16,8 @@
 @property (nonatomic) PFUser *user;
 @property (nonatomic) UITextView *message;
 @property (weak, nonatomic) IBOutlet UITextView *Mes;
+@property (nonatomic, copy) NSDictionary *jsonObject;
+@property (weak, nonatomic) IBOutlet UILabel *invalidUrlLabel;
 
 @end
 
@@ -46,29 +48,37 @@
 //    NSMutableDictionary *message = _user[@"messagesSent"];
 //    NSString *mess = message[_chatPartner[@"username"]];
     //animations for when a message disappears
-    PFQuery *query = [PFQuery queryWithClassName:@"Messages"];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Messages"]; //set up query
     [query whereKey:@"to" equalTo:[PFUser currentUser]];
-    NSMutableArray *people = [[query findObjects]mutableCopy];
+    NSMutableArray *people = [[query findObjects]mutableCopy]; //create array of objects from query
+    
     NSString *text;
-    for (PFObject *o in people){
-        PFUser*q = [o objectForKey:@"from"];
-        PFUser*j =[q fetchIfNeeded];
-        NSLog(@"%@, %@", j, self.chatPartner);
-        NSString *i1 = [o objectForKey:@"senderName"];
-        NSString *i2 = [self.chatPartner objectForKey:@"username"];
-        if ([i1 isEqualToString:i2]){
-            text = [o objectForKey:@"url"];
-            [o deleteInBackground];
+    for (PFObject *message in people){ //For message
+        PFUser* fromQuery = [message objectForKey:@"from"];
+        PFUser* fromUser =[fromQuery fetchIfNeeded];
+        
+        NSString *senderName = [message objectForKey:@"senderName"];
+        NSString *partnerName = [self.chatPartner objectForKey:@"username"];
+        if ([senderName isEqualToString:partnerName]){
+            text = [message objectForKey:@"url"]; //get the URL message
+            [message deleteInBackground]; //delete from PARSE
             break;
         }
     }
     if (text){
+        //See if URL links to an image (jpg, gif, or png)
+        NSString *fileExt = [text pathExtension];
+        if ([fileExt isEqualToString:@"jpg"]){
+            NSLog(@"Hey this is an image!");
+        }
         self.message = [[UITextView alloc] initWithFrame:CGRectMake(self.view.center.x - self.view.bounds.size.width/4, -100, self.view.bounds.size.width, 50)];
         [self.view addSubview:self.message];
         self.message.text = text;
         self.message.userInteractionEnabled = YES;
         [self.message setDataDetectorTypes:UIDataDetectorTypeLink];
         self.message.editable = NO;
+        self.message.font = [UIFont fontWithName:@"Helvetica" size:20];
         self.message.layer.cornerRadius = 6;
         self.message.layer.borderColor = [UIColor colorWithRed:192/255.0 green:192/255.0 blue:192/255.0 alpha:1].CGColor;
         self.message.layer.borderWidth = 2.0;
@@ -159,11 +169,17 @@
 //Methods dismissing the keyboard
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSLog(@"finished typing %@",textField.text);
     [textField resignFirstResponder];
     
     return YES;
 }
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if ([string isEqual: @" "]) return NO;
+    return YES;
+}
+
 - (IBAction)backgroundTouched {
     [self.view endEditing:YES];
 }
@@ -185,9 +201,8 @@
     NSMutableArray *people = [[query findObjects]mutableCopy];
     BOOL present = NO;
     for (PFObject *o in people){
-        PFUser*q = [o objectForKey:@"to"];
-        PFUser*j =[q fetchIfNeeded];
-        NSLog(@"%@, %@", j, self.chatPartner);
+        PFUser* q = [o objectForKey:@"to"];
+        PFUser* j =[q fetchIfNeeded];
         NSString *i1 = [o objectForKey:@"receiverName"];
         NSString *i2 = [self.chatPartner objectForKey:@"username"];
         if ([i1 isEqualToString:i2]){
@@ -196,34 +211,118 @@
         }
     }
     if (!present){
-        PFObject *message = [PFObject objectWithClassName:@"Messages"];
-        [message setObject:_user forKey:@"from"];
-        [message setObject:[_user objectForKey:@"username"] forKey:@"senderName"];
-        [message setObject:_chatPartner forKey:@"to"];
-        [message setObject:[_chatPartner objectForKey:@"username"] forKey:@"receiverName"];
-        [message setObject:self.textField.text forKey:@"url"];
-        [message saveInBackground];
+        NSString *link;
+        if ([self.textField.text characterAtIndex:[self.textField.text length] - 1] != '/') link = [self.textField.text stringByAppendingString:@"/"]; else link = [NSString stringWithString:self.textField.text];
+        [self validateURL:link];
+        
+    }else{
+            [self.view endEditing:YES];
+            if (!self.message){
+                self.Mes.alpha = 1.0;
+                
+                self.Mes.text = [NSString stringWithFormat:@"%@ hasn't gotten your last message yet!", _chatPartner.username];
+                [UIView animateWithDuration:3.5 animations:^{self.Mes.alpha = 0.0;} completion:NULL];
+            }
+            
+        }
+        
+
+
+}
+-(void)updateServer
+{
+    PFObject *message = [PFObject objectWithClassName:@"Messages"];
+    [message setObject:_user forKey:@"from"];
+    [message setObject:[_user objectForKey:@"username"] forKey:@"senderName"];
+    [message setObject:_chatPartner forKey:@"to"];
+    [message setObject:[_chatPartner objectForKey:@"username"] forKey:@"receiverName"];
+    [message setObject:self.textField.text forKey:@"url"];
+    [message saveInBackground];
     
+    [self.view endEditing:YES];
+    self.textField.text = @"http://";
+    if (!self.message){
+        self.Mes.alpha = 1.0;
+        self.Mes.text = @"The message has been sent!";
+        self.Mes.font = [UIFont fontWithName:@"Helvetica" size:20.0];
+        [UIView animateWithDuration:3.5 animations:^{self.Mes.alpha = 0.0;} completion:NULL];
+        
+        //Notify other user
+        PFQuery *pushQuery = [PFInstallation query];
+        [pushQuery whereKey:@"user" equalTo:_chatPartner];
+        
+        // Send push notification to query
+        PFPush *push = [[PFPush alloc] init];
+        [push setQuery:pushQuery]; // Set our Installation query
+        NSString *message = [NSString stringWithFormat:@"%@ sent you a message!", [PFUser currentUser].username];
+        [push setMessage: message];
+        [push sendPushInBackground];
+        
         [self.view endEditing:YES];
-        self.textField.text = @"http://";
-        if (!self.message){
-            self.Mes.alpha = 1.0;
-            self.Mes.text = @"The message has been sent!";
-            self.Mes.font = [UIFont fontWithName:@"Helvetica" size:20.0];
-            [UIView animateWithDuration:3.5 animations:^{self.Mes.alpha = 0.0;} completion:NULL];
-        }
-    }
-    else{
-        [self.view endEditing:YES];
-        if (!self.message){
-            self.Mes.alpha = 1.0;
-            self.Mes.text = @"Please wait for the first message to be received!";
-            [UIView animateWithDuration:3.5 animations:^{self.Mes.alpha = 0.0;} completion:NULL];
-        }
+    } else {
+        self.invalidUrlLabel.text = @"Message sent";
+        self.invalidUrlLabel.hidden = NO;
+        self.invalidUrlLabel.alpha = 1.0;
+        [UIView animateWithDuration:2 animations:^{
+            self.invalidUrlLabel.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            self.invalidUrlLabel.hidden = YES;
+            self.invalidUrlLabel.alpha = 1.0;
+        }];
         
     }
 }
 
+-(void)validateURL:(NSString *)host
+{
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config delegate:nil delegateQueue:nil];
+    NSString *requestString = [NSString stringWithFormat:@"http://api.mywot.com/0.4/public_link_json2?hosts=%@&key=89f86712a5f21b66452d39a116b4383141252c2f", host];
+    NSURL *url = [NSURL URLWithString:requestString];
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:req completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        self.jsonObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+        if ([self.jsonObject count] != 1) {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                self.invalidUrlLabel.text = @"This is not a website";
+                self.invalidUrlLabel.hidden = NO;
+            }];
+            return;
+        }
+        NSArray *allValues = [self.jsonObject allValues];
+        NSDictionary *firstValue = allValues[0];
+        if ((!firstValue[@"0"] && !firstValue[@"4"])) {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                self.invalidUrlLabel.text = @"This is not a website";
+                self.invalidUrlLabel.hidden = NO;
+            }];
+            return;
+        }
+        if (firstValue[@"0"] && [(NSNumber *)firstValue[@"0"][0] intValue] <= 40) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.invalidUrlLabel.text = @"This website is not safe";
+                self.invalidUrlLabel.hidden = NO;
+            });
+            return;
+        }
+        NSLog(@"passed trustworthieness");
+        if (firstValue[@"4"] && [(NSNumber *)firstValue[@"4"][0] intValue] <= 40) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.invalidUrlLabel.text = @"This website is not safe";
+                self.invalidUrlLabel.hidden = NO;
+            });
+            return;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.invalidUrlLabel.hidden = YES;
+            [self updateServer];
+        });
+    }];
+    
+    [dataTask resume];
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -87,16 +87,60 @@
 }
 
 
-- (IBAction)logIn:(id)sender {
+- (IBAction)logIn:(id)sender
+{
+    [self dismissKeyboard];
+    
+    NSError *error;
+    [PFUser logInWithUsername:self.username.text
+                     password:self.password.text
+                        error:&error];
+    
+    if ([PFUser currentUser]){
+        NSLog(@"Successfully logged in!");
+        self.errorLabel.hidden = YES;
+        //Set up pushing
+        PFInstallation *installation = [PFInstallation currentInstallation];
+        installation[@"user"] = [PFUser currentUser];
+        [installation saveInBackground];
+        
+        //Go to contacts page
+        INLContactsTableViewController *contactsView = [[INLContactsTableViewController alloc]init];
+        [self.navigationController pushViewController:contactsView animated:YES];
+        NSLog(@"Pushed contactsView");
+
+    }
+    else{
+        NSLog(@"Error logging in: %@", error);
+        //Try again message somewhere
+        self.errorLabel.text = [error userInfo][@"error"];
+        [self.errorLabel sizeToFit];
+        self.errorLabel.hidden = NO;
+    }
+
+/*
     [PFUser logInWithUsernameInBackground:self.username.text
                                  password:self.password.text
                                     block:^(PFUser *user, NSError *error) {
                                         if (user) {
                                             NSLog(@"Successfully logged in!");
                                             self.errorLabel.hidden = YES;
+                                            //Set up pushing
+                                            PFInstallation *installation = [PFInstallation currentInstallation];
+                                            installation[@"user"] = [PFUser currentUser];
+                                            [installation saveInBackground];
+                                            //Go to contacts page
                                         INLContactsTableViewController *contactsView = [[INLContactsTableViewController alloc]init];
                                             [self.navigationController pushViewController:contactsView animated:YES];
                                             NSLog(@"Pushed contactsView");
+                                            
+                                            //Test query
+                                            PFQuery *pushQuery = [PFInstallation query];
+                                            [pushQuery whereKey:@"user" equalTo: [PFUser currentUser]];
+                                            PFPush *push = [[PFPush alloc] init];
+                                            [push setQuery:pushQuery];
+                                            [push setMessage:@"Yo"];
+                                            [push sendPushInBackground];
                                         } else {
                                             NSLog(@"Error logging in: %@", error);
                                             //Try again message somewhere
@@ -104,7 +148,7 @@
                                             [self.errorLabel sizeToFit];
                                             self.errorLabel.hidden = NO;
                                         }
-                                    }];
+                                    }]; */
 }
 - (IBAction)toSignUp:(id)sender {
     INLsignUpViewController *signUp = [[INLsignUpViewController alloc]init];
@@ -112,10 +156,20 @@
 
 }
 
--(void)dismissKeyboard{
-    [self.view endEditing:YES];
+-(void)dismissKeyboard {
     [_password resignFirstResponder];
     [_username resignFirstResponder];
 }
 
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField == self.username) {
+        [textField resignFirstResponder];
+        [self.password becomeFirstResponder];
+    } else {
+        [textField resignFirstResponder];
+        [self logIn:nil];
+    }
+    return YES;
+}
 @end

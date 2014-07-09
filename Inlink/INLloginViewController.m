@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIButton *logIn;
 @property (weak, nonatomic) IBOutlet UIButton *toSignUp;
+@property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 
 @end
 
@@ -92,12 +93,16 @@
                                     block:^(PFUser *user, NSError *error) {
                                         if (user) {
                                             NSLog(@"Successfully logged in!");
-                                            INLContactsTableViewController *contactsView = [[INLContactsTableViewController alloc]init];
+                                            self.errorLabel.hidden = YES;
+                                        INLContactsTableViewController *contactsView = [[INLContactsTableViewController alloc]init];
                                             [self.navigationController pushViewController:contactsView animated:YES];
                                             NSLog(@"Pushed contactsView");
                                         } else {
                                             NSLog(@"Error logging in: %@", error);
                                             //Try again message somewhere
+                                            self.errorLabel.text = [error userInfo][@"error"];
+                                            [self.errorLabel sizeToFit];
+                                            self.errorLabel.hidden = NO;
                                         }
                                     }];
 }
@@ -106,10 +111,11 @@
     [self.navigationController pushViewController:signUp animated:YES];
 
 }
-//
-//-(void)dismissKeyboard{
-//    [_password resignFirstResponder];
-//    [_username resignFirstResponder];
-//}
+
+-(void)dismissKeyboard{
+    [self.view endEditing:YES];
+    [_password resignFirstResponder];
+    [_username resignFirstResponder];
+}
 
 @end

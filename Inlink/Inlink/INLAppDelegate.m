@@ -43,6 +43,12 @@
     //Change tint of nav bar
     [[UINavigationBar appearance] setBarTintColor: [UIColor colorWithRed:0.278 green:0.859 blue:1 alpha:1]];
     
+    //Enable push notifications
+    [application registerForRemoteNotificationTypes:
+     UIRemoteNotificationTypeBadge |
+     UIRemoteNotificationTypeAlert |
+     UIRemoteNotificationTypeSound];
+    
     return YES;
 }
 

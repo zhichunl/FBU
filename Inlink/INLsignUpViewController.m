@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *signUp;
 @property (weak, nonatomic) IBOutlet UIImageView *logo;
 @property (weak, nonatomic) IBOutlet UIButton *toLogIn;
+@property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 
 
 @end
@@ -41,6 +42,7 @@
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             NSLog(@"Success! You are %@", user);
+            self.errorLabel.hidden = YES;
             
             //Initialize mutable arrays for friend lists
             user[@"friendRequests"] = [[NSMutableArray alloc]init];
@@ -59,6 +61,10 @@
         } else {
             NSString *errorString = [error userInfo][@"error"];
             NSLog(@"%@", errorString);
+            self.errorLabel.text = errorString;
+            [self.errorLabel sizeToFit];
+            self.errorLabel.hidden = NO;
+            
         }
     }];}
 

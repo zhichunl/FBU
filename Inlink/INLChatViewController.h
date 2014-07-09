@@ -10,5 +10,5 @@
 #import "Parse/parse.h"
 @interface INLChatViewController : UIViewController
 @property (nonatomic) PFUser *chatPartner;
-
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @end

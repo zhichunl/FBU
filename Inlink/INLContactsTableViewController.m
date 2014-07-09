@@ -40,7 +40,7 @@
         
         
         //Make a log out button
-        UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"logout_s"] style: UIBarButtonItemStylePlain target:self action:@selector(logOut:)];
+        UIBarButtonItem *logout = [[UIBarButtonItem alloc] initWithTitle: @"Logout" style: UIBarButtonItemStylePlain target:self action:@selector(logOut:)];
         
         logout.tintColor = [UIColor whiteColor];
 

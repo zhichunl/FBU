@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="INLChatViewController">
             <connections>
+                <outlet property="Mes" destination="3B6-R5-2x0" id="2dY-jd-yBu"/>
+                <outlet property="sendButton" destination="QNX-TH-fVY" id="Jf0-KD-OWM"/>
                 <outlet property="textField" destination="DWZ-Nu-4Tn" id="ta0-OH-RIU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -15,8 +17,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your URL" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DWZ-Nu-4Tn">
-                    <rect key="frame" x="20" y="532" width="214" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your URL" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DWZ-Nu-4Tn">
+                    <rect key="frame" x="20" y="532" width="213" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="done"/>
@@ -24,11 +26,11 @@
                         <outlet property="delegate" destination="-1" id="pFb-PC-3Ct"/>
                     </connections>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QNX-TH-fVY">
-                    <rect key="frame" x="260" y="532" width="36" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QNX-TH-fVY">
+                    <rect key="frame" x="253" y="532" width="53" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="36" id="09u-07-zRa"/>
+                        <constraint firstAttribute="width" constant="53" id="09u-07-zRa"/>
                         <constraint firstAttribute="height" constant="30" id="TyM-ZM-6sb"/>
                     </constraints>
                     <state key="normal" title="Send">
@@ -38,6 +40,14 @@
                         <action selector="sendMessage:" destination="-1" eventType="touchUpInside" id="cYY-dw-gIc"/>
                     </connections>
                 </button>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="label" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3B6-R5-2x0">
+                    <rect key="frame" x="40" y="132" width="240" height="77"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="1" green="0.82710504139600738" blue="0.23038879872525941" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.42284956193036871" green="0.56645333726481772" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>

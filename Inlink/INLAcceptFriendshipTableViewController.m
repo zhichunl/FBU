@@ -94,6 +94,7 @@
     NSString *name = user[@"username"];
     cell.fri = user;
     cell.DisplayedName.text = name;
+    [cell.DisplayedName sizeToFit];
     cell.button.center = CGPointMake(cell.button.center.x, cell.button.center.y + 20);
     cell.delegate =self;
     return cell;

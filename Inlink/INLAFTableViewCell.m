@@ -36,6 +36,7 @@
     [query whereKey:@"to" equalTo:[PFUser currentUser]];
     NSMutableArray* people = [[query findObjects] mutableCopy];
     NSMutableArray* cool = [NSMutableArray array];
+    NSMutableArray* ned = [NSMutableArray array];
     for (PFObject *o in people){
         PFUser*j = [o objectForKey:@"from"];
         PFUser *q = [j fetchIfNeeded];
@@ -44,6 +45,12 @@
         if (![i1 isEqualToString:i2]){
             [cool addObject:o];
         }
+        else{
+            [ned addObject:o];
+        }
+    }
+    for (PFObject *o in ned){
+        [o delete];
     }
     
     [self.delegate reload:cool];

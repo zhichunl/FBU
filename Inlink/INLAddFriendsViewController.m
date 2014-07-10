@@ -89,6 +89,19 @@
                 break;
             }
         }
+        PFQuery *query2 = [PFQuery queryWithClassName:@"Friends"];
+        [query2 whereKey:@"to" equalTo:[PFUser currentUser]];
+        NSMutableArray *people2 = [[query2 findObjects]mutableCopy];
+        for (PFObject *o in people2){
+            PFUser *q = [o objectForKey:@"from"];
+            PFUser *j = [q fetchIfNeeded];
+            NSString *i1 = [j objectForKey:@"username"];
+            NSString *i2 = [toBeAdded objectForKey:@"username"];
+            if ([i1 isEqualToString:i2]){
+                aF = YES;
+                break;
+            }
+        }
         
         if (!present){
             if (!aF){

@@ -13,14 +13,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="325" height="68"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j3h-IW-FHX">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j3h-IW-FHX">
                         <rect key="frame" x="53" y="23" width="123" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="123" placeholder="YES" id="HOv-sq-56a"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MpU-xJ-i56">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MpU-xJ-i56">
                         <rect key="frame" x="271" y="23" width="22" height="22"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <state key="normal">
@@ -32,6 +35,14 @@
                     </button>
                 </subviews>
                 <color key="backgroundColor" red="0.7912009580291971" green="0.92695027372262717" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="MpU-xJ-i56" secondAttribute="bottom" constant="23" id="D5D-5w-pKQ"/>
+                    <constraint firstItem="MpU-xJ-i56" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="23" id="ORd-PS-lY4"/>
+                    <constraint firstAttribute="bottom" secondItem="j3h-IW-FHX" secondAttribute="bottom" constant="24" id="Vuk-wd-ztA"/>
+                    <constraint firstItem="j3h-IW-FHX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="53" id="ZdT-n5-NEq"/>
+                    <constraint firstItem="j3h-IW-FHX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="23" id="kXc-ce-bjK"/>
+                    <constraint firstAttribute="trailing" secondItem="MpU-xJ-i56" secondAttribute="trailing" constant="32" id="lIZ-f1-i3i"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="DisplayedName" destination="j3h-IW-FHX" id="B1h-bB-aS9"/>
